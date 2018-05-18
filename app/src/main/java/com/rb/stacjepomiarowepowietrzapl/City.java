@@ -4,7 +4,7 @@ public class City {
 
     private Integer id;
     private String name;
-    private Commune  commune;
+    private Commune commune;
 
     public Integer getId() {
         return id;
