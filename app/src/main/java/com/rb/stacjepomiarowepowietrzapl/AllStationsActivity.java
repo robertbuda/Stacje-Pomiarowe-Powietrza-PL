@@ -3,6 +3,7 @@ package com.rb.stacjepomiarowepowietrzapl;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.google.gson.Gson;
@@ -45,11 +46,15 @@ public class AllStationsActivity extends AppCompatActivity implements StationCon
                 .build();
 
         presenter = new StationPresenter(this, retrofit.create(Api.class));
-
     }
 
     @Override
     public void showData(List<Station> stations) {
+
+        StationAdapter stationAdapter = new StationAdapter(stations,this);
+        station_recycler_view.setLayoutManager(new LinearLayoutManager(this));
+        station_recycler_view.setAdapter(stationAdapter);
+        stationAdapter.notify();
 
     }
 }

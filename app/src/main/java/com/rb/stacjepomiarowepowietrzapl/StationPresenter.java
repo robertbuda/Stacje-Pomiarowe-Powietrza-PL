@@ -31,7 +31,8 @@ public class StationPresenter implements StationContract.Presenter, LifecycleObs
 
     @Override
     public void getStationsData() {
-        compositeDisposable.add(api.getAllStations()
+        compositeDisposable.add(
+                api.getAllStations()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 //.subscribe()
