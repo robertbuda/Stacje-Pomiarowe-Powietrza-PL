@@ -1,6 +1,7 @@
 package com.rb.stacjepomiarowepowietrzapl;
 
 import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
@@ -11,9 +12,9 @@ public class CityData {
     @ColumnInfo(name = "city_id")
     public int cityId;
 
+    @ColumnInfo(name = "city_name")
     public String name;
 
-
-    //public Commune commune;
-
+    @Embedded
+    public CommuneData communeData = new CommuneData();
 }
