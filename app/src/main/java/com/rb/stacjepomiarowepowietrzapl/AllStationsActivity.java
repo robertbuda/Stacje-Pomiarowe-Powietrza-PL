@@ -17,13 +17,13 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+
 public class AllStationsActivity extends AppCompatActivity implements StationContract.View{
 
     @BindView(R.id.station_recycler_view)
     RecyclerView station_recycler_view;
 
     private StationContract.Presenter presenter;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

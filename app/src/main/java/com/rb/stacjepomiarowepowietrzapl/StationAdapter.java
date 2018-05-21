@@ -15,7 +15,6 @@ import butterknife.ButterKnife;
 
 public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationHolder>{
 
-
     private List<Station> stations;
     private Context context;
 

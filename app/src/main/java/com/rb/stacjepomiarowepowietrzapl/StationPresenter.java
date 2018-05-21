@@ -35,10 +35,9 @@ public class StationPresenter implements StationContract.Presenter, LifecycleObs
                 api.getAllStations()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                //.subscribe()
                 .subscribe(
-                        rockets -> {
-                            view.showData(rockets);
+                        stations -> {
+                            view.showData(stations);
                         },
                         throwable -> {
 

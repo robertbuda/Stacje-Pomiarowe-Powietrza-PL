@@ -2,16 +2,16 @@ package com.rb.stacjepomiarowepowietrzapl;
 
 public class City {
 
-    private Integer id;
+    private int cityId;
     private String name;
     private Commune commune;
 
     public Integer getId() {
-        return id;
+        return cityId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(int cityId) {
+        this.cityId = cityId;
     }
 
     public String getName() {
