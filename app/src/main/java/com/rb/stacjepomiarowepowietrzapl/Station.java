@@ -1,12 +1,30 @@
 package com.rb.stacjepomiarowepowietrzapl;
 
+
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
+@Entity
 public class Station {
 
+    @PrimaryKey
     private Integer id;
+
+    @ColumnInfo(name = "station_name")
     private String stationName;
+
+    @ColumnInfo(name = "gegr_lat")
     private String gegrLat;
+
+    @ColumnInfo(name = "gegr_lon")
     private String gegrLon;
+
+    @Ignore
     private City city;
+
+    @ColumnInfo(name = "address_street")
     private String addressStreet;
 
     public Integer getId() {

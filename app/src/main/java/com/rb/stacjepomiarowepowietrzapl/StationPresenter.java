@@ -4,6 +4,8 @@ import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.OnLifecycleEvent;
+import android.arch.persistence.room.Dao;
+import android.util.Log;
 
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class StationPresenter implements StationContract.Presenter, LifecycleObs
     private Api api;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private List<Station> stations;
+    private StationDao stationDao = AppApplication.getAppRoomDatabase().stationDao();
 
     public StationPresenter(StationContract.View view, Api api) {
         this.view = view;
@@ -27,6 +30,7 @@ public class StationPresenter implements StationContract.Presenter, LifecycleObs
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     private void onCreate() {
         getStationsData();
+
     }
 
     @Override
@@ -37,7 +41,11 @@ public class StationPresenter implements StationContract.Presenter, LifecycleObs
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         stations -> {
-                            view.showData(stations);
+                            //view.showData(stations);
+                            Log.d("data",String.valueOf(stations));
+                            addStationsToDatabase(stations);
+                            showStationsFromDatabase();
+
                         },
                         throwable -> {
 
@@ -46,5 +54,16 @@ public class StationPresenter implements StationContract.Presenter, LifecycleObs
 
                         })
         );
+    }
+
+    public void addStationsToDatabase (List <Station> stations){
+        stationDao.insertStations(stations);
+        //stationDao.insertFirstStation(stations.get(0));
+
+    }
+
+    private void showStationsFromDatabase() {
+        view.showData(stationDao.getAll());
+
     }
 }
