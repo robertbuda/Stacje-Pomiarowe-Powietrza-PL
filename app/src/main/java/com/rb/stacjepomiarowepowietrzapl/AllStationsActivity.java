@@ -10,6 +10,8 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.schedulers.Schedulers;
@@ -23,6 +25,7 @@ public class AllStationsActivity extends AppCompatActivity implements StationCon
     @BindView(R.id.station_recycler_view)
     RecyclerView station_recycler_view;
 
+
     private StationContract.Presenter presenter;
 
     @Override
@@ -32,6 +35,9 @@ public class AllStationsActivity extends AppCompatActivity implements StationCon
         setContentView(R.layout.activity_stations_all);
         ButterKnife.bind(this);
 
+     /*   ((AppApplication) getApplication()).getAppComponent()
+                .plus(new StationModule(this))
+                .inject(this);*/
         startRetroFit();
     }
 

@@ -1,4 +1,4 @@
-package com.rb.stacjepomiarowepowietrzapl;
+package com.rb.stacjepomiarowepowietrzapl.dagger;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

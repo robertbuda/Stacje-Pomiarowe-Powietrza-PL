@@ -1,6 +1,12 @@
-package com.rb.stacjepomiarowepowietrzapl;
+package com.rb.stacjepomiarowepowietrzapl.dagger;
 
 public class Commune {
+
+    public Commune(String communeName, String districtName, String provinceName) {
+        this.communeName = communeName;
+        this.districtName = districtName;
+        this.provinceName = provinceName;
+    }
 
     private String communeName;
     private String districtName;

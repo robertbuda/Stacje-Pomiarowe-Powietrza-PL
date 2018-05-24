@@ -3,7 +3,12 @@ package com.rb.stacjepomiarowepowietrzapl;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
+
+import com.rb.stacjepomiarowepowietrzapl.dagger.Commune;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,11 +22,16 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.btSeeOnMap)
     Button btSeeOnMap;
 
+    @Inject
+    Commune commune;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        ((AppApplication) getApplication()).getAppComponent().inject(this);
+        Log.e("Commune", commune.getCommuneName());
     }
 
     @OnClick(R.id.btSeeAll)
