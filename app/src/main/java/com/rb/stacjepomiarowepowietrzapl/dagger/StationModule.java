@@ -1,4 +1,8 @@
-package com.rb.stacjepomiarowepowietrzapl;
+package com.rb.stacjepomiarowepowietrzapl.dagger;
+
+import com.rb.stacjepomiarowepowietrzapl.Api;
+import com.rb.stacjepomiarowepowietrzapl.StationContract;
+import com.rb.stacjepomiarowepowietrzapl.StationPresenter;
 
 import javax.inject.Singleton;
 

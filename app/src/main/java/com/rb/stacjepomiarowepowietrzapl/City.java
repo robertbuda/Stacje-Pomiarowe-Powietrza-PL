@@ -5,8 +5,6 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
-import com.rb.stacjepomiarowepowietrzapl.dagger.Commune;
-
 @Entity
 public class City {
 

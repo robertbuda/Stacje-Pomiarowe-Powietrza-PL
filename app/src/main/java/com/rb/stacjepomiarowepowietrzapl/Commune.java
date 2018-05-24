@@ -1,4 +1,4 @@
-package com.rb.stacjepomiarowepowietrzapl.dagger;
+package com.rb.stacjepomiarowepowietrzapl;
 
 public class Commune {
 

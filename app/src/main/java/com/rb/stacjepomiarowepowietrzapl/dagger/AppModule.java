@@ -1,8 +1,8 @@
-package com.rb.stacjepomiarowepowietrzapl;
+package com.rb.stacjepomiarowepowietrzapl.dagger;
 
 import android.app.Application;
 
-import com.rb.stacjepomiarowepowietrzapl.dagger.Commune;
+import com.rb.stacjepomiarowepowietrzapl.Commune;
 
 import javax.inject.Singleton;
 

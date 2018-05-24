@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 
-import com.rb.stacjepomiarowepowietrzapl.dagger.Commune;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -30,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        ((AppApplication) getApplication()).getAppComponent().inject(this);
+       ((AppApplication) getApplication()).getAppComponent().inject(this);
         Log.e("Commune", commune.getCommuneName());
     }
 
