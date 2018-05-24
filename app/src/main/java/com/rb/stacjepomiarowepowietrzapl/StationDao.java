@@ -14,7 +14,6 @@ public interface StationDao {
     @Query("SELECT * FROM station")
     List<Station> getAll();
 
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertStations(List<Station> station);
 

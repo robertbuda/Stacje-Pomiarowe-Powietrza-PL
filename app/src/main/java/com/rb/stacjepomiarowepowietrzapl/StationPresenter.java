@@ -5,7 +5,9 @@ import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.arch.persistence.room.Dao;
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -42,24 +44,21 @@ public class StationPresenter implements StationContract.Presenter, LifecycleObs
                 .subscribe(
                         stations -> {
                             //view.showData(stations);
-                            Log.d("data",String.valueOf(stations));
                             addStationsToDatabase(stations);
                             showStationsFromDatabase();
 
                         },
                         throwable -> {
-
+                            //TODO
                         },
                         () -> {
-
+                            //Toast.makeText(,"Sorry",Toast.LENGTH_LONG).show();
                         })
         );
     }
 
     public void addStationsToDatabase (List <Station> stations){
         stationDao.insertStations(stations);
-        //stationDao.insertFirstStation(stations.get(0));
-
     }
 
     private void showStationsFromDatabase() {

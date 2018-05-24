@@ -24,6 +24,18 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
         @BindView(R.id.station_id)
         TextView station_id;
 
+        @BindView(R.id.station_name)
+        TextView station_name;
+
+        @BindView(R.id.station_street)
+        TextView station_street;
+
+        @BindView(R.id.station_street_text)
+        TextView station_street_text;
+
+        @BindView(R.id.station_city_name)
+        TextView station_city_name;
+
         public StationHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
@@ -48,8 +60,20 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
     @Override
     public void onBindViewHolder(@NonNull StationAdapter.StationHolder holder, int position) {
         Station station = stations.get(position);
-        TextView textView = holder.station_id;
-        textView.setText(String.valueOf(station.getId()));
+
+        TextView station_id = holder.station_id;
+        station_id.setText(String.valueOf(station.getId()));
+
+        TextView station_name = holder.station_name;
+        station_name.setText(station.getStationName());
+
+        TextView station_street = holder.station_street;
+        TextView station_street_text = holder.station_street_text;
+        station_street.setText(station.getAddressStreet());
+
+        TextView station_city_name = holder.station_city_name;
+        station_city_name.setText(station.getCity().getName());
+
     }
 
     @Override

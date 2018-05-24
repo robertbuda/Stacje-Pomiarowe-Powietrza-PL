@@ -2,9 +2,11 @@ package com.rb.stacjepomiarowepowietrzapl;
 
 
 import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+
 
 @Entity
 public class Station {
@@ -21,7 +23,8 @@ public class Station {
     @ColumnInfo(name = "gegr_lon")
     private String gegrLon;
 
-    @Ignore
+
+    @Embedded
     private City city;
 
     @ColumnInfo(name = "address_street")

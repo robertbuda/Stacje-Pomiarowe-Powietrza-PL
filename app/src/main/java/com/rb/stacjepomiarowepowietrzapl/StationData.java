@@ -12,7 +12,6 @@ public class StationData {
     @PrimaryKey
     public int id;
 
-
     @ColumnInfo(name = "station_name")
     public String stationName;
 
@@ -21,7 +20,6 @@ public class StationData {
 
     @ColumnInfo(name = "gegr_lon")
     public String gegrLon;
-
 
     @Ignore
     public CityData cityData = new CityData();

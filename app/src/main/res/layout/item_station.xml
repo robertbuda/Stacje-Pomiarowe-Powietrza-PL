@@ -2,20 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:layout_height="wrap_content">
 
 
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/station_card_view"
         android:layout_gravity="center"
-        android:layout_margin="8dp"
+        android:layout_margin="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:cardCornerRadius="4dp"
-        card_view:cardElevation="10dp"
+        card_view:cardElevation="4dp"
         >
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/station_id_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Station id:"
+            android:padding="8dp"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            />
 
         <TextView
             android:id="@+id/station_id"
@@ -23,7 +37,74 @@
             android:layout_height="wrap_content"
             android:text="TEST ID"
             android:padding="8dp"
+            card_view:layout_constraintStart_toEndOf="@id/station_id_text"
+            card_view:layout_constraintTop_toTopOf="parent"
             />
+
+        <TextView
+            android:id="@+id/station_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name:"
+            android:padding="8dp"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/station_id_text"
+            />
+
+        <TextView
+            android:id="@+id/station_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TEST NAME"
+            android:padding="8dp"
+            card_view:layout_constraintStart_toEndOf="@id/station_name_text"
+            card_view:layout_constraintTop_toBottomOf="@id/station_id_text"
+            />
+
+        <TextView
+            android:id="@+id/station_street_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Street:"
+            android:padding="8dp"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/station_name_text"
+            />
+
+        <TextView
+            android:id="@+id/station_street"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TEST STREET"
+            android:padding="8dp"
+            card_view:layout_constraintStart_toEndOf="@id/station_street_text"
+            card_view:layout_constraintTop_toBottomOf="@id/station_name_text"
+            />
+
+        <TextView
+            android:id="@+id/station_city_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="City:"
+            android:padding="8dp"
+            card_view:layout_constraintStart_toEndOf="@id/station_street"
+            card_view:layout_constraintTop_toBottomOf="@id/station_name_text"
+            />
+
+        <TextView
+            android:id="@+id/station_city_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TEST CITY"
+            android:padding="8dp"
+            card_view:layout_constraintStart_toEndOf="@id/station_city_text"
+            card_view:layout_constraintTop_toBottomOf="@id/station_name_text"
+            />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
 
     </android.support.v7.widget.CardView>
 
