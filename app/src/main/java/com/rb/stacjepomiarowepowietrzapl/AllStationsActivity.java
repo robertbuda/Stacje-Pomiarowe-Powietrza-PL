@@ -25,24 +25,18 @@ public class AllStationsActivity extends AppCompatActivity implements StationCon
     @BindView(R.id.station_recycler_view)
     RecyclerView station_recycler_view;
 
-
     private StationContract.Presenter presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_stations_all);
         ButterKnife.bind(this);
 
-     /*   ((AppApplication) getApplication()).getAppComponent()
-                .plus(new StationModule(this))
-                .inject(this);*/
         startRetroFit();
     }
 
     private void startRetroFit() {
-
         RxJava2CallAdapterFactory rxJava2CallAdapterFactory = RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io());
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -56,11 +50,9 @@ public class AllStationsActivity extends AppCompatActivity implements StationCon
 
     @Override
     public void showData(List<Station> stations) {
-
         StationAdapter stationAdapter = new StationAdapter(stations,this);
         station_recycler_view.setLayoutManager(new LinearLayoutManager(this));
         station_recycler_view.setAdapter(stationAdapter);
         stationAdapter.notify();
-
     }
 }
