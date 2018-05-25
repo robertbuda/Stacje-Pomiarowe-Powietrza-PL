@@ -23,17 +23,23 @@ public class StationPresenter implements StationContract.Presenter, LifecycleObs
     private List<Station> stations;
     private StationDao stationDao = AppApplication.getAppRoomDatabase().stationDao();
 
-    public StationPresenter(StationContract.View view, Api api) {
-        this.view = view;
+    public StationPresenter(Api api) {
         this.api = api;
-        ((LifecycleOwner) this.view).getLifecycle().addObserver(this);
+       // ((LifecycleOwner) this.view).getLifecycle().addObserver(this);
     }
 
+    @Override
+    public void setView(StationContract.View view){
+        this.view = view;
+    }
+
+
+/*
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     private void onCreate() {
         getStationsData();
-
     }
+*/
 
     @Override
     public void getStationsData() {

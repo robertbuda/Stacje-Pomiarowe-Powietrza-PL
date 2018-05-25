@@ -1,6 +1,9 @@
-package com.rb.stacjepomiarowepowietrzapl.dagger;
+package com.rb.stacjepomiarowepowietrzapl;
 
 import android.app.Application;
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.LifecycleOwner;
+import android.view.LayoutInflater;
 
 import com.google.gson.Gson;
 import com.rb.stacjepomiarowepowietrzapl.Api;
@@ -21,8 +24,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AppModule {
 
     Application mApplication;
-    StationContract.View view;
-    Api api;
+    private StationContract.View view;
+
 
     public AppModule(Application mApplication) {
         this.mApplication = mApplication;
@@ -30,7 +33,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    Application providesApplication() {
+    Application provideApplication() {
         return mApplication;
     }
 
@@ -44,7 +47,6 @@ public class AppModule {
     @Provides
     @Singleton
     Retrofit provideRetrofit(){
-
         RxJava2CallAdapterFactory rxJava2CallAdapterFactory = RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io());
         return new Retrofit.Builder()
                 .baseUrl(Api.BASE_URL)
@@ -55,14 +57,14 @@ public class AppModule {
 
     @Provides
     @Singleton
-    Api provideApi() {
-        return api;
+    Api provideApi(Retrofit retrofit) {
+        return retrofit.create(Api.class);
     }
 
 
     @Provides
     @Singleton
-    StationPresenter provideStationPresenter(StationContract.View view , Retrofit retrofit) {
-        return new StationPresenter(view, retrofit.create(Api.class));
+    StationPresenter provideStationPresenter(Api api) {
+        return new StationPresenter(api);
     }
 }

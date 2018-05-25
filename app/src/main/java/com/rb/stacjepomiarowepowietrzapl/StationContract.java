@@ -7,6 +7,8 @@ public interface StationContract {
     interface Presenter {
 
         void getStationsData();
+
+        void setView(StationContract.View view);
     }
 
     interface View {

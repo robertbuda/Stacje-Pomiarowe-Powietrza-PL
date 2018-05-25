@@ -3,10 +3,6 @@ package com.rb.stacjepomiarowepowietrzapl;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 
-import com.rb.stacjepomiarowepowietrzapl.dagger.AppComponent;
-import com.rb.stacjepomiarowepowietrzapl.dagger.AppModule;
-import com.rb.stacjepomiarowepowietrzapl.dagger.DaggerAppComponent;
-
 public class AppApplication extends Application {
 
     private static AppRoomDatabase appRoomDatabase;

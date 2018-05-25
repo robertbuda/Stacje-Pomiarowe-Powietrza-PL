@@ -1,5 +1,6 @@
 package com.rb.stacjepomiarowepowietrzapl;
 
+import android.arch.lifecycle.LifecycleOwner;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +26,7 @@ public class AllStationsActivity extends AppCompatActivity implements StationCon
     @BindView(R.id.station_recycler_view)
     RecyclerView station_recycler_view;
 
-    private StationContract.Presenter presenter;
+    @Inject StationPresenter presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,20 +34,12 @@ public class AllStationsActivity extends AppCompatActivity implements StationCon
         setContentView(R.layout.activity_stations_all);
         ButterKnife.bind(this);
 
-        startRetroFit();
+        ((AppApplication) getApplication()).getAppComponent().inject(this);
+            presenter.setView(this);
+
+            presenter.getStationsData();
     }
 
-    private void startRetroFit() {
-        RxJava2CallAdapterFactory rxJava2CallAdapterFactory = RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io());
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Api.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(new Gson()))
-                .addCallAdapterFactory(rxJava2CallAdapterFactory)
-                .build();
-
-        presenter = new StationPresenter(this, retrofit.create(Api.class));
-    }
 
     @Override
     public void showData(List<Station> stations) {
