@@ -36,6 +36,16 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
         @BindView(R.id.station_city_name)
         TextView station_city_name;
 
+        @BindView(R.id.commune_name)
+        TextView commune_name;
+
+        @BindView(R.id.district_name)
+        TextView district_name;
+
+        @BindView(R.id.province_name)
+        TextView province_name;
+
+
         public StationHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
@@ -68,11 +78,19 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
         station_name.setText(station.getStationName());
 
         TextView station_street = holder.station_street;
-        TextView station_street_text = holder.station_street_text;
         station_street.setText(station.getAddressStreet());
 
         TextView station_city_name = holder.station_city_name;
         station_city_name.setText(station.getCity().getName());
+
+        TextView commune_name = holder.commune_name;
+        commune_name.setText(station.getCity().getCommune().getCommuneName());
+
+        TextView district_name = holder.district_name;
+        district_name.setText(station.getCity().getCommune().getDistrictName());
+
+        TextView province_name = holder.province_name;
+        province_name.setText(station.getCity().getCommune().getProvinceName());
 
     }
 

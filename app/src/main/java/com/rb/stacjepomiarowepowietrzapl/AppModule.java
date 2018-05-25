@@ -37,11 +37,11 @@ public class AppModule {
         return mApplication;
     }
 
-    @Provides
+    /*@Provides
     @Singleton
     Commune provideCommune() {
-        return new Commune("asd", "dsa", "weq");
-    }
+        return new Commune();
+    }*/
 
 
     @Provides

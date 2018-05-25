@@ -35,9 +35,8 @@ public class AllStationsActivity extends AppCompatActivity implements StationCon
         ButterKnife.bind(this);
 
         ((AppApplication) getApplication()).getAppComponent().inject(this);
-            presenter.setView(this);
-
-            presenter.getStationsData();
+        presenter.setView(this);
+        presenter.getStationsData();
     }
 
 

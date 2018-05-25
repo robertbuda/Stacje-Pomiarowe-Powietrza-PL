@@ -2,4 +2,5 @@
     <string name="app_name">Stacje Pomiarowe Powietrza PL</string>
     <string name="info_and_source">Stacje Pomiarowe Powietrza w Polsce \ndane pobrane z https://danepubliczne.gov.pl</string>
     <string name="zobacz_list_stacji">Zobacz listę stacji</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

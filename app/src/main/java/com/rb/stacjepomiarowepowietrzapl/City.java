@@ -1,6 +1,7 @@
 package com.rb.stacjepomiarowepowietrzapl;
 
 import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
@@ -15,7 +16,7 @@ public class City {
     @ColumnInfo(name = "city_name")
     private String name;
 
-    @Ignore
+    @Embedded
     private Commune commune;
 
 

@@ -1,16 +1,22 @@
 package com.rb.stacjepomiarowepowietrzapl;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
+@Entity
 public class Commune {
 
-    public Commune(String communeName, String districtName, String provinceName) {
-        this.communeName = communeName;
-        this.districtName = districtName;
-        this.provinceName = provinceName;
-    }
-
+    @PrimaryKey
+    @ColumnInfo(name = "commune_name")
     private String communeName;
+
+    @ColumnInfo(name = "district_name")
     private String districtName;
+
+    @ColumnInfo(name = "province_name")
     private String provinceName;
+
 
     public String getCommuneName() {
         return communeName;
@@ -36,4 +42,6 @@ public class Commune {
         this.provinceName = provinceName;
     }
 
-}
+
+    }
+

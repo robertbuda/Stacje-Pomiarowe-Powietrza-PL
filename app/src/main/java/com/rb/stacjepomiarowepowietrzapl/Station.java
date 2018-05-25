@@ -23,7 +23,6 @@ public class Station {
     @ColumnInfo(name = "gegr_lon")
     private String gegrLon;
 
-
     @Embedded
     private City city;
 
