@@ -18,10 +18,10 @@ public class Station {
     private String stationName;
 
     @ColumnInfo(name = "gegr_lat")
-    private String gegrLat;
+    private double gegrLat;
 
     @ColumnInfo(name = "gegr_lon")
-    private String gegrLon;
+    private double gegrLon;
 
     @Embedded
     private City city;
@@ -45,19 +45,19 @@ public class Station {
         this.stationName = stationName;
     }
 
-    public String getGegrLat() {
+    public double getGegrLat() {
         return gegrLat;
     }
 
-    public void setGegrLat(String gegrLat) {
+    public void setGegrLat(double gegrLat) {
         this.gegrLat = gegrLat;
     }
 
-    public String getGegrLon() {
+    public double getGegrLon() {
         return gegrLon;
     }
 
-    public void setGegrLon(String gegrLon) {
+    public void setGegrLon(double gegrLon) {
         this.gegrLon = gegrLon;
     }
 

@@ -9,19 +9,22 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class StationPresenter implements StationContract.Presenter, LifecycleObserver {
+public class StationPresenter implements StationContract.Presenter {
 
     private StationContract.View view;
     private Api api;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
-    private List<Station> stations;
+    private List<Station> stations = AppApplication.getAppRoomDatabase().stationDao().getAll();
     private StationDao stationDao = AppApplication.getAppRoomDatabase().stationDao();
+
 
     public StationPresenter(Api api) {
         this.api = api;
@@ -71,4 +74,5 @@ public class StationPresenter implements StationContract.Presenter, LifecycleObs
         view.showData(stationDao.getAll());
 
     }
+
 }

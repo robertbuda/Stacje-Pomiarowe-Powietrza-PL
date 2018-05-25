@@ -1,5 +1,7 @@
 package com.rb.stacjepomiarowepowietrzapl;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.List;
 
 public interface StationContract {
@@ -9,6 +11,7 @@ public interface StationContract {
         void getStationsData();
 
         void setView(StationContract.View view);
+
     }
 
     interface View {
