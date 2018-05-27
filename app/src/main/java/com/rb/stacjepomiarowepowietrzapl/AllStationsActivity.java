@@ -3,10 +3,18 @@ package com.rb.stacjepomiarowepowietrzapl;
 import android.arch.lifecycle.LifecycleOwner;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -21,12 +29,13 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class AllStationsActivity extends AppCompatActivity implements StationContract.View{
+public class AllStationsActivity extends AppCompatActivity implements StationContract.View {
 
     @BindView(R.id.station_recycler_view)
     RecyclerView station_recycler_view;
 
-    @Inject StationPresenter presenter;
+    @Inject StationContract.Presenter presenter;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,7 +46,8 @@ public class AllStationsActivity extends AppCompatActivity implements StationCon
         ((AppApplication) getApplication()).getAppComponent().inject(this);
         presenter.setView(this);
         presenter.getStationsData();
-    }
+
+        }
 
 
     @Override
@@ -47,4 +57,8 @@ public class AllStationsActivity extends AppCompatActivity implements StationCon
         station_recycler_view.setAdapter(stationAdapter);
         stationAdapter.notify();
     }
+
+
+
+
 }

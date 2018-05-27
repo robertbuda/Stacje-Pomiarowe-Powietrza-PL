@@ -37,12 +37,6 @@ public class AppModule {
         return mApplication;
     }
 
-    /*@Provides
-    @Singleton
-    Commune provideCommune() {
-        return new Commune();
-    }*/
-
 
     @Provides
     @Singleton
@@ -64,7 +58,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    StationPresenter provideStationPresenter(Api api) {
+    StationContract.Presenter provideStationPresenter(Api api) {
         return new StationPresenter(api);
     }
 }

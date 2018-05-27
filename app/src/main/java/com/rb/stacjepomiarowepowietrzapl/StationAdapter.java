@@ -1,12 +1,24 @@
 package com.rb.stacjepomiarowepowietrzapl;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
 
@@ -17,9 +29,14 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
 
     private List<Station> stations;
     private Context context;
+    GoogleMap map;
+    private double lat;
+    private double lng;
+    private String name;
+    private boolean flag = true;
 
 
-    public class StationHolder extends RecyclerView.ViewHolder {
+    public class StationHolder extends RecyclerView.ViewHolder implements OnMapReadyCallback{
 
         @BindView(R.id.station_id)
         TextView station_id;
@@ -45,10 +62,62 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
         @BindView(R.id.province_name)
         TextView province_name;
 
+        @BindView(R.id.mapView)
+        MapView mapView;
+
+        @BindView(R.id.textShowMap)
+        TextView textShowMap;
+
 
         public StationHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
+
+
+            mapView.onCreate(null);
+            mapView.getMapAsync(this);
+            mapView.onResume();
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (flag) {
+                        mapView.setVisibility(View.VISIBLE);
+                        flag = false;
+                        textShowMap.setText("Hide Map");
+                        textShowMap.setTextColor(Color.RED);
+                    } else {
+                    mapView.setVisibility(View.GONE);
+                    flag = true;
+                    textShowMap.setText("Show Map");
+                    textShowMap.setTextColor(Color.GREEN);
+
+                }}
+            });
+        }
+
+        @Override
+        public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+        map.getUiSettings().setMapToolbarEnabled(true);
+
+            Station station = stations.get(getAdapterPosition());
+            lat = station.getGegrLat();
+            lng = station.getGegrLon();
+            name = station.getStationName();
+            Toast.makeText(itemView.getContext(), ""+lat + " " + lng, Toast.LENGTH_SHORT).show();
+
+            LatLng latLng = new LatLng(lat,lng);
+
+                map.addMarker(new MarkerOptions()
+                        .position(latLng)
+                        .title(name));
+
+            //map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,5));
+
+
         }
     }
 
@@ -92,6 +161,8 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
         TextView province_name = holder.province_name;
         province_name.setText(station.getCity().getCommune().getProvinceName());
 
+        MapView mapView = holder.mapView;
+        mapView.onStart();
     }
 
     @Override

@@ -23,7 +23,4 @@ public interface StationDao {
     @Delete
     void deleteStation(Station station);
 
-    /*@Query("SELECT * FROM station WHERE gegr_lat LIKE :gegrLat AND gegr_lon LIKE :gegrLon ")
-    List<Station> getAllPlaces(double gegrLat, double gegrLon);*/
-
 }

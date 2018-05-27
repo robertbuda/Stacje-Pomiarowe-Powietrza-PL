@@ -6,6 +6,7 @@ import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.arch.persistence.room.Dao;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -22,7 +23,6 @@ public class StationPresenter implements StationContract.Presenter {
     private StationContract.View view;
     private Api api;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
-    private List<Station> stations = AppApplication.getAppRoomDatabase().stationDao().getAll();
     private StationDao stationDao = AppApplication.getAppRoomDatabase().stationDao();
 
 
@@ -35,7 +35,6 @@ public class StationPresenter implements StationContract.Presenter {
     public void setView(StationContract.View view){
         this.view = view;
     }
-
 
 /*
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
