@@ -55,7 +55,7 @@ public class AllStationsActivity extends AppCompatActivity implements StationCon
         StationAdapter stationAdapter = new StationAdapter(stations,this);
         station_recycler_view.setLayoutManager(new LinearLayoutManager(this));
         station_recycler_view.setAdapter(stationAdapter);
-        stationAdapter.notify();
+        //stationAdapter.notify();
     }
 
 
