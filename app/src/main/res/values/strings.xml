@@ -16,4 +16,5 @@
     <string name="district">District: </string>
     <string name="province">Province: </string>
     <string name="commune1">Commune:</string>
+    <string name="stacje_pomiarowe_powietrza_pl">Stacje Pomiarowe Powietrza PL</string>
 </resources>

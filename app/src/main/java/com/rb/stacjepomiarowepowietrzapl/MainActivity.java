@@ -20,16 +20,12 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.btSeeOnMap)
     Button btSeeOnMap;
 
-    /*@Inject
-    Commune commune;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-       /*((AppApplication) getApplication()).getAppComponent().inject(this);
-        Log.e("Commune", commune.getCommuneName());*/
     }
 
     @OnClick(R.id.btSeeAll)
