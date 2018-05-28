@@ -7,6 +7,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -33,21 +34,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.getUiSettings().setMapToolbarEnabled(true);
 
-        LatLng latLng = new LatLng(51.773884, 19.441445);
-
-        for (int i = 0 ; i < stationMapDao.getAll().size(); i++) {
-            lat = stationMapDao.getAll().get(i).getGegrLat();
-            lng = stationMapDao.getAll().get(i).getGegrLon();
-
-            mMap.addMarker(new MarkerOptions()
-                    .position(new LatLng( lat , lng ))
-                    .anchor(0.5f , 0.5f)
-                    .title(stationMapDao.getAll().get(i).getStationName()));
-        }
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,5));
-
+        setMapSettings();
+        getStationsToMap();
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
@@ -56,5 +45,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
+
+    private void setMapSettings() {
+        mMap.getUiSettings().setMapToolbarEnabled(true);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.getUiSettings().setAllGesturesEnabled(true);
+    }
+
+    private void getStationsToMap() {
+        LatLng latLng = new LatLng(52.148778, 19.232892);
+
+        for (int i = 0 ; i < stationMapDao.getAll().size(); i++) {
+            lat = stationMapDao.getAll().get(i).getGegrLat();
+            lng = stationMapDao.getAll().get(i).getGegrLon();
+
+            mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng( lat , lng ))
+                    .anchor(0.5f , 0.5f)
+                    .snippet(stationMapDao.getAll().get(i).getAddressStreet())
+                    .title(stationMapDao.getAll().get(i).getStationName()));
+        }
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,6));
+    }
+
+
 }
 

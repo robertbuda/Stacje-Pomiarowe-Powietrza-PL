@@ -1,5 +1,6 @@
 package com.rb.stacjepomiarowepowietrzapl;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -19,6 +20,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
@@ -37,41 +39,21 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
     private double lngS = 19.441445;
     private String name;
     private boolean flag = true;
-
     private StationDao stationMapDao = AppApplication.getAppRoomDatabase().stationDao();
 
 
-    public class StationHolder extends RecyclerView.ViewHolder implements OnMapReadyCallback{
+    public class StationHolder extends RecyclerView.ViewHolder{
 
-        @BindView(R.id.station_id)
-        TextView station_id;
-
-        @BindView(R.id.station_name)
-        TextView station_name;
-
-        @BindView(R.id.station_street)
-        TextView station_street;
-
-        @BindView(R.id.station_street_text)
-        TextView station_street_text;
-
-        @BindView(R.id.station_city_name)
-        TextView station_city_name;
-
-        @BindView(R.id.commune_name)
-        TextView commune_name;
-
-        @BindView(R.id.district_name)
-        TextView district_name;
-
-        @BindView(R.id.province_name)
-        TextView province_name;
-
-        @BindView(R.id.mapView)
-        MapView mapView;
-
-        @BindView(R.id.textShowMap)
-        TextView textShowMap;
+        @BindView(R.id.station_id) TextView station_id;
+        @BindView(R.id.station_name) TextView station_name;
+        @BindView(R.id.station_street) TextView station_street;
+        @BindView(R.id.station_street_text) TextView station_street_text;
+        @BindView(R.id.station_city_name) TextView station_city_name;
+        @BindView(R.id.commune_name) TextView commune_name;
+        @BindView(R.id.district_name) TextView district_name;
+        @BindView(R.id.province_name) TextView province_name;
+        @BindView(R.id.mapView) MapView mapView;
+        @BindView(R.id.textShowMap) TextView textShowMap;
 
 
         public StationHolder(View itemView) {
@@ -79,60 +61,58 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
             ButterKnife.bind(this,itemView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onClick(View v) {
-
                     if (flag) {
-                        mapView.setVisibility(View.VISIBLE);
-                        flag = false;
-                        textShowMap.setText("Hide Map");
-                        textShowMap.setTextColor(Color.RED);
-                        mapView.onCreate(null);
-                        mapView.onResume();
-                        mapView.getMapAsync(new OnMapReadyCallback() {
-                            @Override
-                            public void onMapReady(GoogleMap googleMap) {
-                                latS = stations.get(getAdapterPosition()).getGegrLat();
-                                lngS = stations.get(getAdapterPosition()).getGegrLon();
-
-                                map = googleMap;
-                                LatLng latLng = new LatLng(latS, lngS);
-                                for (int i = 0 ; i < stationMapDao.getAll().size(); i++) {
-                                    lat = stationMapDao.getAll().get(i).getGegrLat();
-                                    lng = stationMapDao.getAll().get(i).getGegrLon();
-                                    map.addMarker(new MarkerOptions()
-                                            .position(new LatLng( lat , lng ))
-                                            .anchor(0.5f , 0.5f)
-                                            .title(stationMapDao.getAll().get(i).getStationName()));
-                                }
-                                map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,11));
-                            }
-                        });
-
+                        openMapWindow();
+                        createMap();
                     } else {
-                    mapView.setVisibility(View.GONE);
-                    flag = true;
-                    textShowMap.setText("Show Map");
-                    textShowMap.setTextColor(Color.GREEN);
-                }
+                        closeMapWindow();
+                    }
                 }
             });
         }
 
+        private void openMapWindow() {
+            mapView.setVisibility(View.VISIBLE);
+            textShowMap.setText(R.string.hide_map);
+            textShowMap.setTextColor(Color.RED);
+            flag = false;
+        }
 
-        @Override
-        public void onMapReady(GoogleMap googleMap) {
-           /* map = googleMap;
+        private void createMap() {
+            mapView.onCreate(null);
+            mapView.onResume();
+            mapView.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(GoogleMap googleMap) {
+                    map = googleMap;
+                    getStationsToMap();
+                }
+            });
+        }
+
+        private void getStationsToMap() {
+            latS = stations.get(getAdapterPosition()).getGegrLat();
+            lngS = stations.get(getAdapterPosition()).getGegrLon();
             LatLng latLng = new LatLng(latS, lngS);
+
             for (int i = 0 ; i < stationMapDao.getAll().size(); i++) {
                 lat = stationMapDao.getAll().get(i).getGegrLat();
                 lng = stationMapDao.getAll().get(i).getGegrLon();
                 map.addMarker(new MarkerOptions()
                         .position(new LatLng( lat , lng ))
-                        .anchor(0.5f , 0.5f)
                         .title(stationMapDao.getAll().get(i).getStationName()));
             }
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,11));*/
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,12));
+        }
+
+        private void closeMapWindow() {
+            mapView.setVisibility(View.GONE);
+            textShowMap.setText(R.string.show_map);
+            textShowMap.setTextColor(Color.BLUE);
+            flag = true;
         }
     }
 
@@ -174,18 +154,11 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
 
         TextView province_name = holder.province_name;
         province_name.setText(station.getCity().getCommune().getProvinceName());
-
-        MapView mapView = holder.mapView;
-    }
+        }
 
     @Override
     public int getItemCount() {
         return stations.size();
     }
-
-
-    public void showMarkerOnMap(){
-
-        }
 
 }
