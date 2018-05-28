@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -30,10 +31,14 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
     private List<Station> stations;
     private Context context;
     private GoogleMap map;
-    private double lat;
-    private double lng;
+    private double lat = 51.773884;
+    private double lng = 19.441445;
+    private double latS = 51.773884;
+    private double lngS = 19.441445;
     private String name;
     private boolean flag = true;
+
+    private StationDao stationMapDao = AppApplication.getAppRoomDatabase().stationDao();
 
 
     public class StationHolder extends RecyclerView.ViewHolder implements OnMapReadyCallback{
@@ -73,10 +78,6 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
             super(itemView);
             ButterKnife.bind(this,itemView);
 
-            mapView.onCreate(null);
-            mapView.getMapAsync(this);
-            mapView.onResume();
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -86,27 +87,52 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
                         flag = false;
                         textShowMap.setText("Hide Map");
                         textShowMap.setTextColor(Color.RED);
-                        addMarkerToMap(getAdapterPosition());
+                        mapView.onCreate(null);
+                        mapView.onResume();
+                        mapView.getMapAsync(new OnMapReadyCallback() {
+                            @Override
+                            public void onMapReady(GoogleMap googleMap) {
+                                latS = stations.get(getAdapterPosition()).getGegrLat();
+                                lngS = stations.get(getAdapterPosition()).getGegrLon();
+
+                                map = googleMap;
+                                LatLng latLng = new LatLng(latS, lngS);
+                                for (int i = 0 ; i < stationMapDao.getAll().size(); i++) {
+                                    lat = stationMapDao.getAll().get(i).getGegrLat();
+                                    lng = stationMapDao.getAll().get(i).getGegrLon();
+                                    map.addMarker(new MarkerOptions()
+                                            .position(new LatLng( lat , lng ))
+                                            .anchor(0.5f , 0.5f)
+                                            .title(stationMapDao.getAll().get(i).getStationName()));
+                                }
+                                map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,11));
+                            }
+                        });
+
                     } else {
                     mapView.setVisibility(View.GONE);
                     flag = true;
                     textShowMap.setText("Show Map");
                     textShowMap.setTextColor(Color.GREEN);
-                    map.clear();
-                    notifyDataSetChanged();
-
                 }
                 }
             });
         }
 
+
         @Override
         public void onMapReady(GoogleMap googleMap) {
-        map = googleMap;
-        LatLng latLngStart = new LatLng(51.773884, 19.441445);
-        map.isMyLocationEnabled();
-        map.getUiSettings().setMapToolbarEnabled(true);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngStart,5));
+           /* map = googleMap;
+            LatLng latLng = new LatLng(latS, lngS);
+            for (int i = 0 ; i < stationMapDao.getAll().size(); i++) {
+                lat = stationMapDao.getAll().get(i).getGegrLat();
+                lng = stationMapDao.getAll().get(i).getGegrLon();
+                map.addMarker(new MarkerOptions()
+                        .position(new LatLng( lat , lng ))
+                        .anchor(0.5f , 0.5f)
+                        .title(stationMapDao.getAll().get(i).getStationName()));
+            }
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,11));*/
         }
     }
 
@@ -118,7 +144,6 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
     @NonNull
     @Override
     public StationHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.item_station,parent,false);
         StationHolder stationHolder = new StationHolder(view);
@@ -151,7 +176,6 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
         province_name.setText(station.getCity().getCommune().getProvinceName());
 
         MapView mapView = holder.mapView;
-
     }
 
     @Override
@@ -160,25 +184,8 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
     }
 
 
-    public void addMarkerToMap(int position){
+    public void showMarkerOnMap(){
 
-        Station station = stations.get(position);
-
-        lat = station.getGegrLat();
-        lng = station.getGegrLon();
-        name = station.getStationName();
-        LatLng latLng = new LatLng(lat, lng);
-
-        map.addMarker(new MarkerOptions()
-                .position(latLng)
-                .title(name));
-
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 5));
-
-        notifyItemChanged(position);
-        notifyDataSetChanged();
-    }
-
-
+        }
 
 }
