@@ -1,17 +1,5 @@
 package com.rb.stacjepomiarowepowietrzapl;
 
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleObserver;
-import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.OnLifecycleEvent;
-import android.arch.persistence.room.Dao;
-import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.google.android.gms.maps.model.LatLng;
-
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;

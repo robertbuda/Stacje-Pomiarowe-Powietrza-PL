@@ -7,7 +7,7 @@
 
     <android.support.v7.widget.SearchView
         android:id="@+id/searchViewStations"
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

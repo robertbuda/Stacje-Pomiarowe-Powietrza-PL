@@ -33,6 +33,9 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
     private List<Station> stations;
     private Context context;
     private GoogleMap map;
+
+
+
     private double lat = 51.773884;
     private double lng = 19.441445;
     private double latS = 51.773884;
@@ -40,8 +43,9 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
     private String name;
     private boolean flag = true;
     private StationDao stationMapDao = AppApplication.getAppRoomDatabase().stationDao();
+    private int selectedItemPosition = -1;
 
-    private int selectedItemPos = -1;
+
 
 
     public class StationHolder extends RecyclerView.ViewHolder{
@@ -58,6 +62,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
         @BindView(R.id.textShowMap) TextView textShowMap;
 
 
+
         public StationHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
@@ -66,8 +71,6 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void onClick(View v) {
-                    /*int newSelectedItem = getAdapterPosition()==selectedItemPos?-1:getAdapterPosition();
-                    setSelectedItem(newSelectedItem);*/
 
                     if (flag) {
                         openMapWindow();
@@ -79,7 +82,10 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
             });
         }
 
-        private void openMapWindow() {
+
+
+
+        public void openMapWindow() {
             mapView.setVisibility(View.VISIBLE);
             textShowMap.setText(R.string.hide_map);
             textShowMap.setTextColor(Color.RED);
@@ -101,6 +107,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
         private void getStationsToMap() {
             latS = stations.get(getAdapterPosition()).getGegrLat();
             lngS = stations.get(getAdapterPosition()).getGegrLon();
+
             LatLng latLng = new LatLng(latS, lngS);
 
             for (int i = 0 ; i < stationMapDao.getAll().size(); i++) {
@@ -110,10 +117,11 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
                         .position(new LatLng( lat , lng ))
                         .title(stationMapDao.getAll().get(i).getStationName()));
             }
+
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,12));
         }
 
-        private void closeMapWindow() {
+        public void closeMapWindow() {
             mapView.setVisibility(View.GONE);
             textShowMap.setText(R.string.show_map);
             textShowMap.setTextColor(Color.BLUE);
@@ -121,10 +129,14 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
         }
     }
 
+
+
+
     public StationAdapter(List<Station> stations, Context context) {
         this.stations = stations;
         this.context = context;
     }
+
 
     @NonNull
     @Override
@@ -160,15 +172,8 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
         TextView province_name = holder.province_name;
         province_name.setText(station.getCity().getCommune().getProvinceName());
 
-        holder.itemView.setSelected(selectedItemPos == position);
-    }
+        MapView mapView = holder.mapView;
 
-    protected void setSelectedItem(int position) {
-        int oldSelected = selectedItemPos;
-        selectedItemPos = position;
-
-        notifyItemChanged(oldSelected);
-        notifyItemChanged(selectedItemPos);
     }
 
     @Override
@@ -176,4 +181,14 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
         return stations.size();
     }
 
-}
+    @Override
+    public void onViewDetachedFromWindow(@NonNull StationHolder holder) {
+
+        if(holder.mapView.getVisibility() == View.VISIBLE) {
+            holder.closeMapWindow();
+            holder.textShowMap.setTextColor(Color.DKGRAY);
+        }
+            holder.textShowMap.setTextColor(Color.DKGRAY);
+    }
+    }
+

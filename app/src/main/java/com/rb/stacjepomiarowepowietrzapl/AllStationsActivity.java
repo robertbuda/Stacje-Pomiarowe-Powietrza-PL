@@ -1,6 +1,8 @@
 package com.rb.stacjepomiarowepowietrzapl;
 
+import android.app.SearchManager;
 import android.arch.lifecycle.LifecycleOwner;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.SearchView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -46,7 +49,11 @@ public class AllStationsActivity extends AppCompatActivity implements StationCon
         ((AppApplication) getApplication()).getAppComponent().inject(this);
         presenter.setView(this);
         presenter.getStationsData();
-        }
+
+    }
+
+    private void doMySearch(String query) {
+    }
 
 
     @Override
@@ -54,6 +61,6 @@ public class AllStationsActivity extends AppCompatActivity implements StationCon
         StationAdapter stationAdapter = new StationAdapter(stations,this);
         station_recycler_view.setLayoutManager(new LinearLayoutManager(this));
         station_recycler_view.setAdapter(stationAdapter);
+        //stationAdapter.onViewDetachedFromWindow(station_recycler_view);
     }
-
 }
