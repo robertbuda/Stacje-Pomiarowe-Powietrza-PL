@@ -17,4 +17,6 @@
     <string name="province">Province: </string>
     <string name="commune1">Commune:</string>
     <string name="stacje_pomiarowe_powietrza_pl">Stacje Pomiarowe Powietrza PL</string>
+    <string name="zobacz_stacje_na_mapie">Zobacz stacje na mapie</string>
+    <string name="wykonano_na_zlecenie_software_development_academy">Wykonano na zlecenie Software Development Academy</string>
 </resources>

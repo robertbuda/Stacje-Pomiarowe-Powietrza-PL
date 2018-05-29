@@ -21,7 +21,9 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -35,6 +37,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private double lng;
     private DrawerLayout mDrawerLayout;
     private NavigationView navigationView;
+    private CameraPosition cameraPosition;
 
 
     @Override
@@ -88,7 +91,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     .snippet(stationMapDao.getAll().get(i).getAddressStreet())
                     .title(stationMapDao.getAll().get(i).getStationName()));
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,6));
+        cameraPosition = new CameraPosition.Builder()
+                .target(latLng)
+                .zoom(5.8f)
+                .bearing(1)
+                .build();
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,6));
     }
 
     public void showToolbar() {

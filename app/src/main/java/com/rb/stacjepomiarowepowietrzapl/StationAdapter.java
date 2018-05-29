@@ -41,6 +41,8 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
     private boolean flag = true;
     private StationDao stationMapDao = AppApplication.getAppRoomDatabase().stationDao();
 
+    private int selectedItemPos = -1;
+
 
     public class StationHolder extends RecyclerView.ViewHolder{
 
@@ -64,6 +66,9 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void onClick(View v) {
+                    /*int newSelectedItem = getAdapterPosition()==selectedItemPos?-1:getAdapterPosition();
+                    setSelectedItem(newSelectedItem);*/
+
                     if (flag) {
                         openMapWindow();
                         createMap();
@@ -154,7 +159,17 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationH
 
         TextView province_name = holder.province_name;
         province_name.setText(station.getCity().getCommune().getProvinceName());
-        }
+
+        holder.itemView.setSelected(selectedItemPos == position);
+    }
+
+    protected void setSelectedItem(int position) {
+        int oldSelected = selectedItemPos;
+        selectedItemPos = position;
+
+        notifyItemChanged(oldSelected);
+        notifyItemChanged(selectedItemPos);
+    }
 
     @Override
     public int getItemCount() {

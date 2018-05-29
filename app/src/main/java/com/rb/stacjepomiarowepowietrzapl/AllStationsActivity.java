@@ -56,7 +56,4 @@ public class AllStationsActivity extends AppCompatActivity implements StationCon
         station_recycler_view.setAdapter(stationAdapter);
     }
 
-
-
-
 }
